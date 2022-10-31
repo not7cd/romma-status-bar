@@ -21,24 +21,26 @@
 
 HomieDevice homie;
 
-#define NEO_PIN D1
-#define NEO_NUM 6
+const int NEO_PIN = D1;
+const int NEO_NUM = 6;
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NEO_NUM, NEO_PIN, NEO_GRB + NEO_KHZ800);
 
 void init_homie_led(HomieNode* pNode, int pin_num, String id){
-  Button* pButton = new Button(pin_num, INPUT);
+  // Button* pButton = new Button(pin_num, INPUT);
   HomieProperty *pProperty = pNode->NewProperty();
 
   pProperty->strFriendlyName = id;
   pProperty->strID = id;
   pProperty->datatype = homieBool;
-  pProperty->SetBool(pButton->isPressed());
+  // pProperty->SetBool(pButton->isPressed());
   pProperty->strFormat = "";
-  pButton->onChange([pButton,pProperty]() {
-    pProperty->SetBool(pButton->isPressed());
-  });
+  // pButton->onChange([pButton,pProperty]() {
+  //   // pProperty->SetBool(pButton->isPressed());
+  // });
 }
 
-void init_buzzer(HomieNode* pNode, HomieProperty* pProperty, String id){
+void init_neo_led(HomieNode* pNode, HomieProperty* pProperty, String id){
   pProperty = pNode->NewProperty();
   pProperty->strFriendlyName = "Annoying " + id;
   pProperty->strID = id;
